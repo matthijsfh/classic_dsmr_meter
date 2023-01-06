@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"name": "Smart Meter",
+			"path": ".."
+		},
+		{
+			"path": "..\\..\\..\\03_esp8266_wifimanager"
+		}
+	],
+	"settings": {}
+}
