@@ -657,6 +657,7 @@ void setup()
     setSolarLed(1);
 
     //-------------------------------------------------------------------
+    // MFH
     // GEN 1 smart meter = 9600
     // All other GEN's = 115200
     //-------------------------------------------------------------------
@@ -664,17 +665,28 @@ void setup()
     Serial.begin(115200);
 
     //-------------------------------------------------------------------
-    // Swap of UART 1 & UART 2 is needed as UART 1 is hardwired to the
-    // USB-to-Serial chip and therefore cannot be used to connect to the
-    // smart meter.
-    // To use the "serial debug output", a seperate USB-serial converter is
-    // needed of which only th ESP Tx must be connected to converter Rx.
-    // ESP Rx goes to the smart meter.
+    // MFH
+    // P1 output is inverted. Use either a hardware inverter, or invert the RX pin for the UART.
+    // Invert the RX serialport by setting a register value, this way the TX might continue normally allowing the serial monitor to read println's
+    //-------------------------------------------------------------------
+    Serial.println("Inverting RX pin & swapping UART!");
+    USC0(UART0) = USC0(UART0) | BIT(UCRXI);
+
+    //-------------------------------------------------------------------
+    // MFH
+    // On a NODEMCU, swap of SERIAL pins is needed as the USB-Serial chip is hardwired to RXD0 & TXD0.
+    // Therefore the smartmeter P1 cannot be connected to the RXD0.
+    // Serial.swap() will change the SERIAL pins to RXD2 & TXD2.
+    // The UART remains UART0, just pins are re-mapped.
+    // Another call Serial.swap() will change them back.
+    // Connect a seperate USB-SERIAL converter to TXD2 to monitor debug logging if needed.
     //-------------------------------------------------------------------
     delay(10);
-    // Serial.swap();
+    Serial.swap();
     delay(10);
-       
+
+    Serial.println("Serial port is ready to recieve.");
+
     //-------------------------------------------------------------------
     // Read config file
     //-------------------------------------------------------------------
