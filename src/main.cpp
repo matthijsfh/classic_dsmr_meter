@@ -524,7 +524,7 @@ void TickerUpdate()
 		if (client.state() == MQTT_CONNECTED)
 		{
             // Request data from meter
-            Serial.println("Start request");
+            Serial.println("Request");
             setRequestLedOn();
 		}
 		else
@@ -665,7 +665,7 @@ void setup()
 
     //-------------------------------------------------------------------
     // Swap of UART 1 & UART 2 is needed as UART 1 is hardwired to the
-    // USB-to-Serial chip and therefore cannot be used to connecto to the
+    // USB-to-Serial chip and therefore cannot be used to connect to the
     // smart meter.
     // To use the "serial debug output", a seperate USB-serial converter is
     // needed of which only th ESP Tx must be connected to converter Rx.
@@ -704,7 +704,9 @@ void setup()
 
     //------------------------------------------------------------------------------------
     // Connect the "WIFI_SWITCH" pin to V+ to force the wifiManager to show up.
-    // Geen AP mode als wifi niet gevonden is ivm "inloggen door derden".
+    // This can be useful if you want to change the wifi network the ESP is connected too.
+    // wifiManager.autoConnect() will connect if the SSID/PASS are valid, so no way to connect 
+    // it to a different WIFI, unless we force the ConfigPortal to load.
     //------------------------------------------------------------------------------------
 	if (digitalRead(WIFI_SWITCH) == 1)
 	{
@@ -712,8 +714,6 @@ void setup()
 	}
 	else
 	{
-		 // Geen AP mode als wifi niet gevonden is ivm "inloggen door derden".
-		 // ESP blijft proberen en zal geen captive portal laten zien.
 		 wifiManager.autoConnect(NodeName);
 	}
 
