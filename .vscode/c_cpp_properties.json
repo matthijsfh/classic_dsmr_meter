@@ -8,13 +8,13 @@
         {
             "name": "PlatformIO",
             "includePath": [
-                "c:/Users/Administrator/Documents/PlatformIO/Projects/22_slimmer_meter_mqtt/Smart Meter/include",
-                "c:/Users/Administrator/Documents/PlatformIO/Projects/22_slimmer_meter_mqtt/Smart Meter/src",
+                "c:/Users/Administrator/Documents/SmartMeter_Git/include",
+                "c:/Users/Administrator/Documents/SmartMeter_Git/src",
                 "C:/Users/Administrator/.platformio/packages/framework-arduinoespressif8266/libraries/LittleFS/src",
-                "c:/Users/Administrator/Documents/PlatformIO/Projects/22_slimmer_meter_mqtt/Smart Meter/.pio/libdeps/nodemcuv2/ArduinoJson/src",
-                "c:/Users/Administrator/Documents/PlatformIO/Projects/22_slimmer_meter_mqtt/Smart Meter/.pio/libdeps/nodemcuv2/PubSubClient/src",
-                "c:/Users/Administrator/Documents/PlatformIO/Projects/22_slimmer_meter_mqtt/Smart Meter/.pio/libdeps/nodemcuv2/Ticker",
-                "c:/Users/Administrator/Documents/PlatformIO/Projects/22_slimmer_meter_mqtt/Smart Meter/.pio/libdeps/nodemcuv2/WiFiManager",
+                "c:/Users/Administrator/Documents/SmartMeter_Git/.pio/libdeps/nodemcuv2/ArduinoJson/src",
+                "c:/Users/Administrator/Documents/SmartMeter_Git/.pio/libdeps/nodemcuv2/PubSubClient/src",
+                "c:/Users/Administrator/Documents/SmartMeter_Git/.pio/libdeps/nodemcuv2/Ticker",
+                "c:/Users/Administrator/Documents/SmartMeter_Git/.pio/libdeps/nodemcuv2/WiFiManager",
                 "C:/Users/Administrator/.platformio/packages/framework-arduinoespressif8266/libraries/ESP8266WebServer/src",
                 "C:/Users/Administrator/.platformio/packages/framework-arduinoespressif8266/libraries/DNSServer/src",
                 "C:/Users/Administrator/.platformio/packages/framework-arduinoespressif8266/libraries/ESP8266WiFi/src",
@@ -59,13 +59,13 @@
             "browse": {
                 "limitSymbolsToIncludedHeaders": true,
                 "path": [
-                    "c:/Users/Administrator/Documents/PlatformIO/Projects/22_slimmer_meter_mqtt/Smart Meter/include",
-                    "c:/Users/Administrator/Documents/PlatformIO/Projects/22_slimmer_meter_mqtt/Smart Meter/src",
+                    "c:/Users/Administrator/Documents/SmartMeter_Git/include",
+                    "c:/Users/Administrator/Documents/SmartMeter_Git/src",
                     "C:/Users/Administrator/.platformio/packages/framework-arduinoespressif8266/libraries/LittleFS/src",
-                    "c:/Users/Administrator/Documents/PlatformIO/Projects/22_slimmer_meter_mqtt/Smart Meter/.pio/libdeps/nodemcuv2/ArduinoJson/src",
-                    "c:/Users/Administrator/Documents/PlatformIO/Projects/22_slimmer_meter_mqtt/Smart Meter/.pio/libdeps/nodemcuv2/PubSubClient/src",
-                    "c:/Users/Administrator/Documents/PlatformIO/Projects/22_slimmer_meter_mqtt/Smart Meter/.pio/libdeps/nodemcuv2/Ticker",
-                    "c:/Users/Administrator/Documents/PlatformIO/Projects/22_slimmer_meter_mqtt/Smart Meter/.pio/libdeps/nodemcuv2/WiFiManager",
+                    "c:/Users/Administrator/Documents/SmartMeter_Git/.pio/libdeps/nodemcuv2/ArduinoJson/src",
+                    "c:/Users/Administrator/Documents/SmartMeter_Git/.pio/libdeps/nodemcuv2/PubSubClient/src",
+                    "c:/Users/Administrator/Documents/SmartMeter_Git/.pio/libdeps/nodemcuv2/Ticker",
+                    "c:/Users/Administrator/Documents/SmartMeter_Git/.pio/libdeps/nodemcuv2/WiFiManager",
                     "C:/Users/Administrator/.platformio/packages/framework-arduinoespressif8266/libraries/ESP8266WebServer/src",
                     "C:/Users/Administrator/.platformio/packages/framework-arduinoespressif8266/libraries/DNSServer/src",
                     "C:/Users/Administrator/.platformio/packages/framework-arduinoespressif8266/libraries/ESP8266WiFi/src",
@@ -109,7 +109,7 @@
                 ]
             },
             "defines": [
-                "PLATFORMIO=60105",
+                "PLATFORMIO=60107",
                 "ESP8266",
                 "ARDUINO_ARCH_ESP8266",
                 "ARDUINO_ESP8266_NODEMCU_ESP12E",

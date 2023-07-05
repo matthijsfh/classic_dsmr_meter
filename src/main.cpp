@@ -12,8 +12,11 @@
 
 #include "settings.h"
 
+// Invert UART RX pin levels.
+#define INVERT_RX       0
+
 // Status LEDs
-#define SOLAR_LED 	14
+#define SOLAR_LED 	    14
 #define REQUEST_LED     12
 #define WIFI_SWITCH 	5
 #define PWM_OUTPUT      4
@@ -48,7 +51,7 @@ void setSolarLed(unsigned char Status);
 // Infinite repeat
 Ticker timer1(TickerUpdate, 5000, 0);
 
-// Create 500 msec timer for "request data signal"
+// Create 500 msec timer for "request data signal OFF"
 // 1 Repeat
 Ticker timer2(setRequestLedOff, 500, 1);
 
@@ -83,6 +86,9 @@ void send_metric(String name, long metric)
 
     String topic = String(Data_Topic) + "/" + name;
     send_mqtt_message(topic.c_str(), output);
+
+    // slow the data rate to the L3tt3r board can handle it.
+    delay(50);
 }
 
 void send_data_to_broker()
@@ -100,7 +106,7 @@ void send_data_to_broker()
 //    send_metric("l1_instant_power_current", L1_INSTANT_POWER_CURRENT);
 //    send_metric("l2_instant_power_current", L2_INSTANT_POWER_CURRENT);
 //    send_metric("l3_instant_power_current", L3_INSTANT_POWER_CURRENT);
-//    send_metric("l1_voltage", L1_VOLTAGE);
+    send_metric("l1_voltage", L1_VOLTAGE);
 //    send_metric("l2_voltage", L2_VOLTAGE);
 //    send_metric("l3_voltage", L3_VOLTAGE);
     
@@ -156,6 +162,7 @@ int FindCharInArrayRev(char array[], char c, int len)
     }
     return -1;
 }
+
 long getValue(char *buffer, int maxlen, char startchar, char endchar)
 {
     int s = FindCharInArrayRev(buffer, startchar, maxlen - 2);
@@ -395,27 +402,31 @@ void processLine(int len)
         // Set analog output
         if (ACTUAL_RETURNDELIVERY > 0)
         {
-            analogWrite(PWM_OUTPUT, (2 * (ACTUAL_RETURNDELIVERY)) / 5);
+            // 255 = 100% = 2500 Watt
+            // Release 3.0.0 Notes BREAKING: analogWriteRange 8-bit default (#7456)
+            analogWrite(PWM_OUTPUT, (ACTUAL_RETURNDELIVERY / 10));
+
             setSolarLed(1);
         }
         else
         {
-            analogWrite(PWM_OUTPUT, (2 * (ACTUAL_CONSUMPTION)) / 5);
+            // 255 = 100% = 2500 Watt
+            // Release 3.0.0 Notes BREAKING: analogWriteRange 8-bit default (#7456)
+            analogWrite(PWM_OUTPUT, (ACTUAL_CONSUMPTION / 10));
             setSolarLed(0);
         }
 
-        if (MQTTCounter == 0)
-        {
-            send_data_to_broker();
-            LAST_UPDATE_SENT = millis();
-        }
+        // if (MQTTCounter == 0)
+        // {
+        send_data_to_broker();
+        LAST_UPDATE_SENT = millis();
+        // }
 
-        // Beperk het aantal berichten naar de MQTT server tot 1 per 30 second (6 * 5 sec update rate)
-        MQTTCounter += 1;
-        if (MQTTCounter >= 6)
-        {
-            MQTTCounter = 0;
-        }
+        // MQTTCounter += 1;
+        // if (MQTTCounter >= 2)
+        // {
+        //     MQTTCounter = 0;
+        // }
     }
 }
 
@@ -515,7 +526,7 @@ void TickerUpdate()
 
 		// Try to re-connect MQTT
 		if (WiFi.status() == WL_CONNECTED )
-		{
+ 		{
 			Connect_MQTT();
 		}
 	}
@@ -524,7 +535,6 @@ void TickerUpdate()
 		if (client.state() == MQTT_CONNECTED)
 		{
             // Request data from meter
-            Serial.println("Request");
             setRequestLedOn();
 		}
 		else
@@ -669,8 +679,11 @@ void setup()
     // P1 output is inverted. Use either a hardware inverter, or invert the RX pin for the UART.
     // Invert the RX serialport by setting a register value, this way the TX might continue normally allowing the serial monitor to read println's
     //-------------------------------------------------------------------
-    Serial.println("Inverting RX pin & swapping UART!");
-    USC0(UART0) = USC0(UART0) | BIT(UCRXI);
+    if (INVERT_RX == 1)
+    {
+        Serial.println("Inverting RX pin & swapping UART!");
+        USC0(UART0) = USC0(UART0) | BIT(UCRXI);
+    }
 
     //-------------------------------------------------------------------
     // MFH
